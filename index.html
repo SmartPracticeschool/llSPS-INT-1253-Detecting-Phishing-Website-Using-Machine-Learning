@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>Phishing Site Checker</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<!--<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">-->
+
+<style>
+.login{
+top: 20%;
+}
+</style>
+</head>
+
+<body>
+ <div class="login">
+	<h1>Phishing Site Checker</h1>
+  <br><br>
+    {{ prediction_text }}
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('y_predict')}}"method="post">
+    <div><p>having_IPhaving_IP_Address</p>
+      <input type="radio" name="having_IPhaving_IP_Address" value=1>Yes</input>
+      <input type="radio" name="having_IPhaving_IP_Address" value=0>No</input>
+    </div>
+    <div><p>URLURL_Length</p>
+      <input type="radio" name="URLURL_Length" value=1>Yes</input>
+      <input type="radio" name="URLURL_Length" value=0>No</input>
+    </div>
+    <div><p>Shortining_Service</p>
+      <input type="radio" name="Shortining_Service" value=1>Yes</input>
+      <input type="radio" name="Shortining_Service" value=0>No</input>
+    </div>
+    <div><p>having_At_Symbol</p>
+      <input type="radio" name="having_At_Symbol" value=1>Yes</input>
+      <input type="radio" name="having_At_Symbol" value=0>No</input>
+    </div>
+    <div><p>double_slash_redirecting</p>
+      <input type="radio" name= "double_slash_redirecting" value=1>Yes</input>
+      <input type="radio" name="  double_slash_redirecting" value=0>No</input>
+    </div>
+    <div><p>Prefix_Suffix</p>
+      <input type="radio" name="Prefix_Suffix" value=1>Yes</input>
+      <input type="radio" name="Prefix_Suffix" value=0>No</input>
+    </div>
+    <div><p>having_Sub_Domain</p>
+      <input type="radio" name="having_Sub_Domain" value=1>Yes</input>
+      <input type="radio" name="having_Sub_Domain" value=0>No</input>
+    </div>
+    <div><p>SSLfinal_State</p>
+      <input type="radio" name="SSLfinal_State" value=1>Yes</input>
+      <input type="radio" name="SSLfinal_State" value=0>No</input>
+    </div>
+    <div><p>Domain_registeration_length</p>
+      <input type="radio" name="Domain_registeration_length" value=1>Yes</input>
+      <input type="radio" name="Domain_registeration_length" value=0>No</input>
+    </div>
+    <div><p>Favicon</p>
+      <input type="radio" name="Favicon" value=1>Yes</input>
+      <input type="radio" name="Favicon" value=0>No</input>
+    </div>
+    <div><p>port</p>
+      <input type="radio" name="port" value=1>Yes</input>
+      <input type="radio" name="port" value=0>No</input>
+    </div>
+    <div><p>HTTPS_token</p>
+      <input type="radio" name="HTTPS_token" value=1>Yes</input>
+      <input type="radio" name="HTTPS_token" value=0>No</input>
+    </div>
+    <div><p>Request_URL</p>
+      <input type="radio" name="Request_URL" value=1>Yes</input>
+      <input type="radio" name="Request_URL" value=0>No</input>
+    </div>
+    <div><p>URL_of_Anchor</p>
+      <input type="radio" name="URL_of_Anchor" value=1>Yes</input>
+      <input type="radio" name="URL_of_Anchor" value=0>No</input>
+    </div>
+    <div><p>Links_in_tags</p>
+      <input type="radio" name="Links_in_tags" value=1>Yes</input>
+      <input type="radio" name="Links_in_tags" value=0>No</input>
+    </div>
+    <div><p>SFH</p>
+      <input type="radio" name="SFH" value=1>Yes</input>
+      <input type="radio" name="SFH" value=0>No</input>
+    </div>
+    <div><p>Submitting_to_email</p>
+      <input type="radio" name="Submitting_to_email" value=1>Yes</input>
+      <input type="radio" name="Submitting_to_email" value=0>No</input>
+    </div>
+    <div><p>Abnormal_URL</p>
+      <input type="radio" name="Abnormal_URL" value=1>Yes</input>
+      <input type="radio" name="Abnormal_URL" value=0>No</input>
+    </div>
+    <div><p>Redirect</p>
+      <input type="radio" name="Redirect" value=1>Yes</input>
+      <input type="radio" name="Redirect" value=0>No</input>
+    </div>
+    <div><p>on_mouseover</p>
+      <input type="radio" name="on_mouseover" value=1>Yes</input>
+      <input type="radio" name="on_mouseover" value=0>No</input>
+    </div>
+    <div><p>RightClick</p>
+      <input type="radio" name="RightClick" value=1>Yes</input>
+      <input type="radio" name="RightClick" value=0>No</input>
+    </div>
+    <div><p>popUpWidnow</p>
+      <input type="radio" name="popUpWidnow" value=1>Yes</input>
+      <input type="radio" name="popUpWidnow" value=0>No</input>
+    </div>
+    <div><p>Iframe</p>
+      <input type="radio" name="Iframe" value=1>Yes</input>
+      <input type="radio" name="Iframe" value=0>No</input>
+    </div>
+    <div><p>age_of_domain</p>
+      <input type="radio" name="age_of_domain" value=1>Yes</input>
+      <input type="radio" name="age_of_domain" value=0>No</input>
+    </div>
+    <div><p>DNSRecord</p>
+      <input type="radio" name="DNSRecord" value=1>Yes</input>
+      <input type="radio" name="DNSRecord" value=0>No</input>
+    </div>
+    <div><p>web_traffic</p>
+      <input type="radio" name="web_traffic" value=1>Yes</input>
+      <input type="radio" name="web_traffic" value=0>No</input>
+    </div>
+    <div><p>Page_Rank</p>
+      <input type="radio" name="Page_Rank" value=1>Yes</input>
+      <input type="radio" name="Page_Rank" value=0>No</input>
+    </div>
+    <div><p>Google_Index</p>
+      <input type="radio" name="Google_Index" value=1>Yes</input>
+      <input type="radio" name="Google_Index" value=0>No</input>
+    </div>
+    <div><p>Links_pointing_to_page</p>
+      <input type="radio" name="Links_pointing_to_page" value=1>Yes</input>
+      <input type="radio" name="Links_pointing_to_page" value=0>No</input>
+    </div>
+    <div><p>Statistical_report</p>
+      <input type="radio" name="Statistical_report" value=1>Yes</input>
+      <input type="radio" name="Statistical_report" value=0>No</input>
+    </div>
+        <button type="submit" class="btn btn-primary btn-block btn-large">Check</button>
+    
+    </form>
+
+   <br>
+   <br>
+   
+
+ </div>
+
+
+</body>
+</html>
+
